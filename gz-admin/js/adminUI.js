@@ -430,6 +430,7 @@ $('#submit-form-kategori').click( function (e) {
 	})
 });
 
+// save menu
 $('#simpan-menu').click(function(e){
 	e.preventDefault();
 	var form = $('#form-menu');
