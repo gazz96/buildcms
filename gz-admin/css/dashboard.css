@@ -1,0 +1,484 @@
+*{
+    box-sizing: border-box;
+}
+
+html,
+body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: sans-serif;
+    position: relative;
+}
+
+.off-canvas .sidebar-wrapper{
+  transform: translate(-250px);
+  max-width:  0;
+}
+
+.off-canvas .module-wrapper{
+  width: 100%;
+}
+
+
+.body-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+.navbar {
+    position: relative;
+    display: inline-block;
+    padding: 0px 10px;
+    padding-top: 7px;
+    width: 100%;
+}
+
+.navbar-header {
+    float: left;
+}
+
+.navbar ul{
+    margin: 0;
+    list-style: none;
+}
+
+
+.nav {
+    float: left;
+}
+
+.navbar-right{
+	float: right;
+}
+
+.navbar-wrapper .nav > li{
+    float: left;
+    padding: 0px;
+    position: relative;
+}
+
+.navbar-wrapper .nav li > .dropdown-menu{
+  display: none;
+  position: absolute;
+  left: -130px;
+  padding: 0;
+  background: #5675bd;
+  top: 38px;
+  font-size: 13px;
+  float: none;
+}
+
+.dropdown-menu{
+  border-radius: 0 !important;
+  max-width: 100px !important;
+}
+
+.dropdown-menu.open{
+  display: block !important;
+}
+
+
+.navbar-wrapper .nav li > .dropdown-menu li > a{
+  
+  padding: 10px 5px;
+  color: #FFF;
+  font-size: 12px;
+  letter-spacing: .5px;
+  background-color: #5675bd;
+}
+
+.navbar-wrapper:after{
+    content: '';
+    clear: both;
+}
+
+.navbar-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    background: #FFF;
+}
+
+.navbar-wrapper .navbar{
+  margin-bottom: 0;
+}
+
+.nav li>a {
+    text-decoration: none;
+}
+
+.navbar-brand {
+    text-decoration: none;
+}
+
+.sidebar-wrapper {
+    width: 250px;
+    min-height: 100vh;
+    background: #5675bd;
+    z-index: 2;
+    overflow-y: auto;
+}
+
+.sidebar-wrapper::-webkit-scrollbar{
+  width: 0px; 
+}
+
+.sidebar-header {
+    text-align: center;
+}
+
+.sidebar-nav li > a {
+    text-decoration: none;
+    display: block;
+    padding: 15px 30px;
+    color: #d9dee4;
+    font-size: 15px;
+    transition: 0.5s ease;
+}
+
+.sidebar-nav li> a > .fa{
+    margin-right: 15px;
+}
+
+.sidebar-nav ul{
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar-nav li> a:hover,
+.sidebar-nav li> a.active{
+    background-color: #4765aa;
+    color: #FFF;
+    transition: 0.5s ease;
+}
+
+.module-header,
+.module-body,
+.module-footer {
+    padding: 15px 30px;
+}
+
+.main-wrapper {
+    position: inherit;
+    min-height: 100vh;
+    display:  flex;
+    flex-wrap:  wrap;}
+
+.module-wrapper {
+    background: #f3f3ff;
+    width: calc(100% - 250px);
+}
+
+.profile-desc h3 {
+    font-size: 20px;
+    color: #FFF;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.nav li > a {
+    display: block;
+    color: #5675bd;
+}
+
+.sidebar-nav > a.active {
+    border-left: 0px solid #25499e;
+}
+
+.accordin {
+    transition: 0.3s ease;
+}
+
+.accordion > .accordion-menu {
+    max-height: 0px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    
+}
+
+.accordion > .accordion-menu li > a{
+    font-size: 13px !important;
+    padding-left: 31px;
+    background-color: rgb(56, 94, 179);
+}
+
+.accordion.active > .accordion-menu{
+    display: block;
+    transition: 0.3s ease;
+}
+
+.btn-add {
+    text-decoration: none !important;
+    background: #5675bd;
+    padding: 8px 10px;
+    color: #FFF !important;
+    font-size: 13px;
+    letter-spacing: 1.1px;
+    vertical-align: middle;
+    margin-left: 0px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.3s ease;
+    border-radius: 0 !important;
+}
+
+.btn-add:hover{
+  background: transparent !important;
+  border: 1px solid #5675bd;
+  color: #5675bd !important;
+}
+
+.widget {
+    position: relative;
+    border: 1px solid #45609c;
+    margin: 20px 0px;
+}
+
+.widget-header,
+.widget-body,
+.widget-footer{
+  padding: 10px 15px;
+}
+
+.widget-header {
+    background: #5675bd;
+}
+
+.widget-header .widget-title{
+  color: #FFF;
+}
+
+.widget-footer{
+  border-top: 1px solid #5675bd;
+}
+
+.widget-footer .widget-action {
+    display: inline-block;
+}
+
+.form-control{
+    border-radius: 0 !important;
+}
+
+.module-box {
+}
+
+.module-body {
+    position: relative;
+    height: 100%;
+}
+
+.menu-wrapper .menu {
+    margin-bottom: 10px;
+    border: 1px solid #5675bd;
+    cursor: pointer;
+}
+
+.menu-wrapper .menu  .menu-header{
+  padding: 8px 10px;
+  background: #5675bd;
+  border-bottom: 1px solid #5675bd;
+}
+.menu-wrapper .menu  .menu-header a{
+  color: #FFF;
+}
+
+.menu-wrapper .menu .menu-body{
+  padding: 8px 10px;
+}
+
+.menu-wrapper .menu .menu-footer{
+  padding: 8px 10px;
+  border-top: 1px solid #5675bd;
+}
+
+.menu-wrapper .menu .menu-animate{
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+ul, li , ol{
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.widget-element {
+    padding: 10px 15px;
+    background: rgba(86,117,189,0.1);
+    margin-bottom: 20px;
+}
+
+.widget-element > select{
+  padding: 10px 5px;
+  width: 100%;
+}
+
+.widget-element .widget-title{padding: 0;margin: 0;}
+
+#widget-wrapper {
+}
+
+.img-wrapper .img-content {
+    padding: 15px 15px;
+    overflow: hidden;
+    transition: 0.3s ease;
+    top: 100%;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    background-color: #FFF;
+    z-index: 0;
+    font-size: 12px;
+    text-align: justify;
+}
+
+.img-wrapper {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0px 0px 10px 0px rgba(86,117,189,.33);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.img-wrapper .img-header {
+    height: 300px;
+    background-color: rgba(86,117,189,0.1);
+}
+
+.img-wrapper .img-footer {
+    background: rgb(86,117,189);
+    position: absolute;
+    width: 100%;
+}
+
+.img-wrapper .img-footer .footer-action > a {
+    color: #FFF !IMPORTANT;
+    padding: 10px 10px;
+}
+
+.header-action {
+    z-index: 9999;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: #FFF;
+}
+
+.header-action > a {
+    padding: 8px 10px;
+}
+
+.add-widget-form {
+    margin-top: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+.widget-element .form-group{
+  margin-bottom: 8px;
+}
+
+#toast {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #5675bd; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+#toast.show{
+    visibility: visible; /* Show the snackbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the snackbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+.box {
+    width: 100%;
+    position: relative;
+}
+
+.box .box-icon {
+    display: inline-block;
+    width: 50px;
+    height: 47px;
+    position: absolute;
+    background: #FFF;
+    z-index: 1;
+    line-height: 50px;
+    text-align: center;
+    top: -15px;
+    left: 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
+    font-size: 1.5em;
+}
+
+.box .box-header {
+    position: relative;
+    width: 100%;
+    padding: 15px;
+    background: #5675bd;
+    color: #FFF;
+    min-height: 100px;
+    margin-top: 10px;
+    vertical-align: middle;
+    display: inline-block;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.3);
+    overflow: hidden;
+}
+
+.box .box-header .box-title, .box .box-header .number {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 70px;
+}
+
+.box .box-header .number {
+    font-weight: bold;
+    font-size: 2em;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+}
+
+.box .box-header .box-title {
+    margin-right: 8px;
+    font-size: 3em;
+}

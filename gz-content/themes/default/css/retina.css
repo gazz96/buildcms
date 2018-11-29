@@ -1,0 +1,26 @@
+
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), screen and (-moz-max-device-pixel-ratio: 2) {
+	
+	.header .menu-search input[type=submit] {
+		background-image: url(../images/icon-search@2x.png);
+	}
+	
+	.breaking-news .breaking-icon {
+		background-image: url(../images/icon-breaking@2x.png);
+	}
+	
+	span.image-hover span.drop-icons .icon-block.icon-loupe {
+		background-image: url(../images/icon-article-loupe@2x.png);
+	}
+	
+	span.image-hover span.drop-icons .icon-block.icon-link {
+		background-image: url(../images/icon-article-link@2x.png);
+	}
+	
+	.article-array li {
+		background: url(../images/icon-article-array@2x.jpg) no-repeat 0px 7px;
+	}
+	
+}
+
