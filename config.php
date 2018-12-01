@@ -13,6 +13,7 @@ define('ADMIN_URL', BASE_URL . 'gz-admin/');
 //PATH
 define('BASE_PATH', '/');
 define('ADMIN_PATH', '/gz-admin/');
+define('THEME_PATH', '/gz-content/themes/');
 
 //ASSETS_URL
 define('ASSETS_URL', BASE_URL .'gz-includes/assets/');

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 29, 2018 at 02:44 AM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Dec 01, 2018 at 12:13 PM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -781,8 +781,7 @@ INSERT INTO `mainmenu` (`id_main`, `id_halaman`, `id_berita`, `id_kategori`, `na
 (183, 0, 0, 0, 'Kontak', 'kontak', 'custom', 95, 1, 'Y', 0),
 (189, 3, 0, 0, 'Struktur Organisasi', 'page/', 'page', 98, 1, 'Y', 0),
 (190, 2, 0, 0, 'Visi dan Misi', 'page/visi-dan-misi', 'page', 99, 1, 'Y', 0),
-(191, 35, 0, 0, 'Lainnya', 'category/', 'category', 100, 0, 'Y', 0),
-(192, 35, 0, 0, 'Lainnya', 'category/lainnya', 'category', 101, 0, 'Y', 0),
+(195, 0, 0, 0, 'github', 'https://github.com', 'custom', 103, 1, 'Y', 0),
 (193, 35, 0, 0, 'Lainnya', 'category/lainnya', 'category', 102, 1, 'Y', 0),
 (194, 0, 159, 0, 'Tugas dan Fungsi', 'single/tugas-dan-fungsi', 'single', 55, 1, 'Y', 193);
 
@@ -34603,30 +34602,24 @@ INSERT INTO `users` (`username`, `password`, `nama_lengkap`, `email`, `no_telp`,
 
 CREATE TABLE `widget` (
   `id_widget` int(11) NOT NULL,
-  `nama_widget` varchar(100) NOT NULL,
-  `tipe_widget` enum('populer','banner','menu','kategori','berita','text','galeri') NOT NULL,
-  `id_area` varchar(11) NOT NULL,
-  `id_banner` varchar(11) NOT NULL,
-  `id_album` varchar(11) NOT NULL,
-  `id_kategori` varchar(11) NOT NULL,
-  `widget_content` text NOT NULL,
-  `widget_area` varchar(50) NOT NULL
+  `id_sidebar` varchar(100) NOT NULL,
+  `widget_content` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `widget`
 --
 
-INSERT INTO `widget` (`id_widget`, `nama_widget`, `tipe_widget`, `id_area`, `id_banner`, `id_album`, `id_kategori`, `widget_content`, `widget_area`) VALUES
-(1, 'ITEM I', 'kategori', '', '', '18', '20', '', 'main'),
-(2, 'ITEM II', 'kategori', '', '', '', '21', '', 'main'),
-(3, 'ITEM III', 'kategori', '', '', '', '5', '', 'main'),
-(4, 'ITEM IV', 'kategori', '', '', '', '6', '', 'main'),
-(10, 'Galeri', 'galeri', '', '', '32', '', '', 'main'),
-(15, 'Index', 'kategori', '', '', '', '20', '', 'sidebar'),
-(19, 'Jambore Siap Siaga Bencana Se Sumut', 'banner', '', '11', '', '', '', 'sidebar'),
-(21, 'gempa', 'kategori', '', '', '', '', '', 'sidebar'),
-(22, 'Status Gunung Sinabung', 'banner', '', '13', '', '', '', 'sidebar');
+INSERT INTO `widget` (`id_widget`, `id_sidebar`, `widget_content`) VALUES
+(1, 'ITEM I', ''),
+(2, 'ITEM II', ''),
+(3, 'ITEM III', ''),
+(4, 'ITEM IV', ''),
+(10, 'Galeri', ''),
+(15, 'Index', ''),
+(19, 'Jambore Siap Siaga Bencana Se Sumut', ''),
+(21, 'gempa', ''),
+(22, 'Status Gunung Sinabung', '');
 
 -- --------------------------------------------------------
 
@@ -34924,7 +34917,7 @@ ALTER TABLE `komentar`
 -- AUTO_INCREMENT for table `mainmenu`
 --
 ALTER TABLE `mainmenu`
-  MODIFY `id_main` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id_main` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 
 --
 -- AUTO_INCREMENT for table `menuarea`

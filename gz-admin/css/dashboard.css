@@ -50,7 +50,7 @@ body{
 }
 
 .navbar-right{
-	float: right;
+    float: right;
 }
 
 .navbar-wrapper .nav > li{
@@ -230,10 +230,16 @@ body{
   color: #5675bd !important;
 }
 
+
+
 .widget {
     position: relative;
-    border: 1px solid #45609c;
+    border: 1px solid #45609E;
     margin: 20px 0px;
+}
+
+.widget:first-of-type {
+    margin-top: 0;
 }
 
 .widget-header,
@@ -242,12 +248,13 @@ body{
   padding: 10px 15px;
 }
 
-.widget-header {
+.widget .widget-header {
     background: #5675bd;
 }
 
-.widget-header .widget-title{
+.widget .widget-header .widget-title{
   color: #FFF;
+  margin: 0;
 }
 
 .widget-footer{
@@ -256,6 +263,21 @@ body{
 
 .widget-footer .widget-action {
     display: inline-block;
+}
+
+
+.mini-widget{
+  max-width: 200px;
+  border: 1px solid #888;
+  margin-bottom: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.mini-widget .widget-header {
+  border-bottom: 1px solid #888;
+  background: #888;
+  color: #fff;
 }
 
 .form-control{

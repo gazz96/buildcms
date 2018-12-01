@@ -1,110 +1,6 @@
 <?php 
 
 function menu_data(){
-	global $db;
-	global $library;
-
-	if(isset($_POST['delete'])){
-		$delete = $db->delete("mainmenu", array('id_main', $_POST['id']));
-		if($delete){
-			$library->message = "Data berhasil dihapus";
-			$library->alert_class = "alert-success";
-		}
-		else{
-			$library->message = "Data gagal dihapus";
-			$library->alert_class = "alert-warning";
-		}
-		unset($_POST);
-	}
-
-	$query_str = "SELECT * FROM mainmenu";
-	$data_menu = $db->get_results($query_str);
-	//echo count($data);
-	//var_dump($data);
-	?>
-
-	<div class="module-header">
-		<?php $library->alert(); ?>
-		<div class="row">
-			<div class="col-md-8">
-				<h3 class="module-title">Data Menu
-					<a href="?module=add_menu" class="btn-add">Tambah Data</a>
-				</h3>	
-			</div>
-			<div class="col-md-4">
-				<form action="" class="" role="form" style="margin-bottom: 40px">	
-					
-					<div class="form-group">
-						<!-- <label class="" for="">Atur Menu</label> 
-						<input type="hidden" name="module" value="get_menu">
-						<select name="id" id="" class="form-control" onchange="this.form.submit()">
-							<option value="">Atur Menu</option>
-							<?php 
-								$query = $db->query("SELECT * FROM menuarea");
-								while ($data = $query->fetch_array()) {
-							?>
-								<option value="<?php echo $data['id_area'] ?>"><?php echo $data['nama_area']; ?></option>
-							<?php } ?>
-						</select>-->
-					</div>
-				</form>
-			</div>
-		</div>
-		 
-	</div>
-
-	<div class="module-body">
-		
-			
-
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table table-bordered" id="table-menu">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Parent</th>
-							<th>Tipe</th>
-							<th>Berita</th>
-							<th>Kategori</th>
-							<th>Nama</th>
-							<th>Aktif</th>
-							<th>Position</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach($data_menu as $d): ?>
-							<tr>
-								<td><?php echo $d['id_main']; ?></td>
-								<td><?php echo $d['id_parent']; ?></td>
-								<td><?php echo $d['type']; ?></td>
-								<td><?php echo $d['id_berita']; ?></td>
-								<td><?php echo $d['id_kategori']; ?></td>
-								<td><?php echo $d['nama_menu']; ?></td>
-								<td><?php echo $d['aktif']; ?></td>
-								<td><?php echo $d['position']; ?></td>
-								<td>
-									<a class="btn btn-warning btn-small" href="?module=edit_menu&id=<?php echo $d['id_main']; ?>"><span class="fa fa-pencil"></span></a>
-									<form action="<?php echo ADMIN_URL . 'dashboard.php'; ?>?module=menu_data" method="POST" style="display: inline-block;">
-										<input type="hidden" name="id" value="<?php echo $d['id_main']; ?>">
-										<button class="btn btn-danger btn-small" input="submit" name="delete">
-											<span class="fa fa-trash"></span>
-										</button>
-									</form>
-								</td>
-							</tr>
-						<?php  endforeach; ?>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<?php 
-}
-
-function add_menu(){
 	global $db, $library;
 
 	// position
@@ -126,7 +22,7 @@ function add_menu(){
 		<?php $library->alert(); ?>
 		<h3 class="module-title">Tambah menu</h3>
 		<form action="" method="get">
-			<input type="hidden" name="module" value="add_menu">
+			<input type="hidden" name="module" value="menu_data">
 			Select Menu	
 			<select name="menuarea" class="menuarea">
 				<option value="">Pilih</option>
@@ -248,6 +144,39 @@ function add_menu(){
 
 					</div>
 				</form>
+
+				<form 
+					action="<?php echo BASE_URL . 'gz-admin/ajax/add-menu.php'; ?>" 
+					method="post" 
+					id="form-custom">
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Custom
+						</div>
+						<div class="panel-body" id="toggle-custom">
+							<input type="hidden" name="menuarea" value="<?php echo $id_area; ?>">
+							<input type="hidden" name="type" value="custom">
+							<input type="hidden" name="true_submit">
+							<div class="form-group">
+								<label for="">Nama Menu</label>
+								<input type="text" name="nama_menu" class="form-control">
+							</div>
+
+							<div class="form-group">
+								<label for="">Link</label>
+								<input type="text" name="link" class="form-control">
+							</div>
+
+						</div>
+						<div class="panel-footer">
+							<button id="submit-form-custom" class="btn btn-sm btn-primary pull-right">Tambah</button>
+							<div class="clearfix"></div>
+						</div>
+
+					</div>
+				</form>
+
 			</div>
 			<div class="col-md-4">
 				<form 
@@ -298,9 +227,9 @@ function add_menu(){
 										</select>
 									</div>
 									<div>
-										<button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $mm['id_main']; ?>)">
+										<!-- <button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $mm['id_main']; ?>)">
 											<span class="fa fa-save"></span>
-										</button> 
+										</button>  -->
 										<button class="btn btn-sm btn-danger" onclick="return deleteCurrentMenu(event,<?php echo $mm['id_main'] ?>,'<?php echo BASE_URL . '/gz-admin/ajax/delete-menu.php' ?>','POST')">
 											<span class="fa fa-trash"></span>
 										</button>
@@ -344,9 +273,9 @@ function add_menu(){
 											</select>
 										</div>
 										<div>
-											<button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $sm['id_main']; ?>)">
+											<!-- <button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $sm['id_main']; ?>)">
 												<span class="fa fa-save"></span>
-											</button> 
+											</button>  -->
 											<button 
 												class="btn btn-sm btn-danger" 
 												onclick="return deleteCurrentMenu(event,<?php echo $sm['id_main'] ?>,'<?php echo BASE_URL . '/gz-admin/ajax/delete-menu.php' ?>','POST')">

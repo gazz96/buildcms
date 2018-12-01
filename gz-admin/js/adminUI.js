@@ -430,6 +430,26 @@ $('#submit-form-kategori').click( function (e) {
 	})
 });
 
+$('#submit-form-custom').click( function (e) {
+	e.preventDefault();
+	let form = $('#form-custom');
+	let method = form.attr('method');
+	let url = form.attr('action');
+	let data = form.serialize();
+
+	console.log( data );
+	
+	$.ajax({
+		type: method,
+		url: url,
+		data: data,
+		success: function( response ) {
+			console.log( response );
+			location.reload();
+		}
+	})
+});
+
 // save menu
 $('#simpan-menu').click(function(e){
 	e.preventDefault();

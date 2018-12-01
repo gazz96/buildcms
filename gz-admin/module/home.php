@@ -83,7 +83,7 @@ function home(){
 		$nilai = implode($nilai, ',');
 		//echo $nilai;
 	 ?>
-	<script>
+	<!-- <script>
 		var chart = document.getElementById('chart');
 		var statsChart = new Chart(chart,{
 			type :  'line',
@@ -101,7 +101,7 @@ function home(){
 				}] 
 			}
 		});
-	</script>
+	</script> -->
 	
 	<?php 
 }
