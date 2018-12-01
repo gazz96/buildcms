@@ -255,17 +255,19 @@ function add_menu(){
 					method="POST" 
 					id="form-menu">
 					<input type="hidden" name="true_submit">
-					<div class="panel panel-default">
-						<div class="panel-heading" style="vertical-align: middle;">
-							Simpan Menu
-							<button 
-								name="simpan" 
-								class="btn btn-sm btn-primary pull-right"
-								id="simpan-menu">Simpan</button>
-							<div class="clearfix"></div>
-						</div>
 
-					</div>
+					<?php if( isset($_GET['menuarea'])) { ?>
+					<div class="panel panel-default">
+							<div class="panel-heading" style="vertical-align: middle;">
+								Simpan Menu
+								<button 
+									name="simpan" 
+									class="btn btn-sm btn-primary pull-right"
+									id="simpan-menu">Simpan</button>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					<?php } ?>
 					<?php while( $mm = $mm_query->fetch_assoc()) { ?>
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -299,7 +301,7 @@ function add_menu(){
 										<button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $mm['id_main']; ?>)">
 											<span class="fa fa-save"></span>
 										</button> 
-										<button class="btn btn-sm btn-danger" onclick="delete CurrentMenu(<?php echo $mm['id_main'] ?>)">
+										<button class="btn btn-sm btn-danger" onclick="return deleteCurrentMenu(event,<?php echo $mm['id_main'] ?>,'<?php echo BASE_URL . '/gz-admin/ajax/delete-menu.php' ?>','POST')">
 											<span class="fa fa-trash"></span>
 										</button>
 									</div>
@@ -345,7 +347,9 @@ function add_menu(){
 											<button class="btn btn-sm btn-primary" onclick="saveCurrentMenu(<?php echo $sm['id_main']; ?>)">
 												<span class="fa fa-save"></span>
 											</button> 
-											<button class="btn btn-sm btn-danger" onclick="delete CurrentMenu(<?php echo $sm['id_main'] ?>)">
+											<button 
+												class="btn btn-sm btn-danger" 
+												onclick="return deleteCurrentMenu(event,<?php echo $sm['id_main'] ?>,'<?php echo BASE_URL . '/gz-admin/ajax/delete-menu.php' ?>','POST')">
 												<span class="fa fa-trash"></span>
 											</button>
 										</div>
@@ -365,295 +369,3 @@ function add_menu(){
 	<?php 
 }
 
-function edit_menu(){
-	global $db, $library;
-	
-	$id = isset($_GET['id']) ? $_GET['id'] : false;
-	$objects = array();
-
-	$library->add_rule('nama_menu', 'Nama Menu', array('require'));
-	$library->add_rule('level', 'level', array('require'));
-	
-	if($library->getPost('level') == "submenu"){
-		$library->add_rule('id_parent', 'Parent Menu', array('require'));
-	}
-
-	$library->add_rule('type', 'Tipe Menu', array('require'));
-	if($library->getPost('type') == "single"){
-		$library->add_rule('id_berita', 'Artikel', array('require'));
-	}elseif($library->getPost('type') == "category"){
-		$library->add_rule('id_kategori', 'Kategori', array('require'));
-	}elseif($library->getPost('type') == "custom"){
-		$library->add_rule('url', 'URL', array('require'));
-	}
-
-	if(isset($_POST['update'])){
-		if($library->run()){
-
-			$id_berita = $library->getPost('id_berita');
-			$id_kategori = $library->getPost('id_kategori');
-			$nama_menu = $library->getPost('nama_menu');
-			$link = $library->getPost('link');
-			$type = $library->getPost('type');
-			$position = $library->getPost('position');
-			$id_area = $library->getPost('id_area');
-			$level = $library->getPost('level');
-			$custom = $library->getPost('url');
-
-			$id_parent = $library->getPost('id_parent');
-
-			//echo $id_parent;
-
-			if($type == "single"){
-				$query_str = "SELECT * FROM berita WHERE id_berita='{$id_berita}' LIMIT 1";
-				$d = $db->get_results($query_str);
-				$link = $type . "/" . $d[0]['title_slug'];
-			}
-			elseif($type == "category"){
-				$query_str = "SELECT * FROM kategori WHERE id_kategori='{$id_kategori}' LIMIT 1";
-				$d = $db->get_results($query_str);
-				$link = $type . "/" . $d[0]['slug_kategori'];
-			}
-			elseif($type == "archived"){
-				$link = $type;
-			}
-			elseif($type == "custom"){
-				$link = $custom;
-			}
-
-
-			$objects = array(	
-				'id_berita' => $id_berita,
-				'id_kategori' => $id_kategori,
-				'nama_menu' => $nama_menu,
-				'link'	=> $link,
-				'type' => $type,
-				'area'	=> $id_area,
-				'aktif' => 'Y',
-				'id_parent' => $id_parent
-			);
-
-			$save = $db->update("mainmenu", $objects,  array('id_main', $_POST['id']));
-			if($save){
-
-				$library->message = "Berhasil memperbaharui data";
-				$library->alert_class = "alert-success";
-			}else{
-				$library->message = "Gagal memperbaharui data";
-				$library->alert_class = "alert-warning";
-			}
-		}
-		else{
-			$library->message = "Data tidak boleh kosong";
-			$library->alert_class = "alert-warning";
-		}		
-	}
-
-	$id = isset($_GET['id']) ? $db->esc_str($_GET['id']) : false;
-	$data = $db->query("SELECT * FROM mainmenu WHERE id_main='{$id}'")->fetch_assoc();
-
-	$nama_menu = $data['nama_menu'];
-	$id_parent = $data['id_parent'];
-	$type = $data['type'];
-	$id_berita = $data['id_berita'];
-	$id_kategori = $data['id_kategori'];
-	$area = $data['area'];
-	$link = $data['link'];
-	?>
-
-	
-	<div class="module-header">
-		<?php $library->alert(); ?>
-		<h3 class="module-title">Edit menu</h3>
-	</div>
-	<div class="module-body">
-		<form action="" method="POST">
-			<input type="hidden" name="id" value="<?php echo $id; ?>">
-			<div class="row">
-				<div class="col-md-8">
-					<div class="form-group">
-						<label for="">Nama Menu</label>
-						<input type="text" class="form-control" name="nama_menu" value="<?php echo $nama_menu; ?>">
-					</div>
-
-					<div class="form-group">
-						<label for="">Level</label>
-						<select name="level" id="menu-level" class="form-control">
-							<option value="mainmenu" <?php if($id_parent == ""){ echo "selected"; } ?>>Main Menu</option>
-							<option value="submenu" <?php if($id_parent != ""){ echo "selected"; } ?>>submenu</option>
-						</select>
-					</div>
-
-					<div id="pilih-parent">
-						<div class="form-group">
-							<label for="">Menu</label>
-							<select name="id_parent" id="id_parent" class="form-control">
-								<option value="">Pilih</option>
-								<?php 
-									$query_str = "SELECT * FROM mainmenu ORDER by id_main DESC ";
-									$data = $db->get_results($query_str);
-									foreach ($data as $d) {		
-								?>
-									<option value="<?php echo $d['id_main'] ?>" <?php if($d['id_main'] == $id_parent){ echo "selected"; } ?>><?php echo $d['nama_menu']; ?></option>
-								
-								<?php }	?>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="">Tipe</label>
-						<select name="type" id="menu-type" class="form-control">
-							<option value="">Pilih</option>
-							<option value="single" <?php if($type == "single"){ echo "selected"; } ?>>Single Page</option>
-							<option value="category" <?php if($type == "category"){ echo "selected"; } ?>>Kategori</option>
-                        	<option value="custom" <?php if($type == "custom"){ echo "selected"; } ?>>Custom</option>
-							<!-- <option value="archived">Archived</option>+ -->
-						</select>
-					</div>
-					
-					<div id="single">
-						<div class="form-group">
-							<label for="">Pilih Artikel</label>
-							<select name="id_berita" id="id_berita" class="form-control">
-								<option value="">Pilih</option>
-								<?php 
-									$query_str = "SELECT * FROM berita WHERE berita_status='Y' ORDER by id_berita DESC";
-									$data = $db->get_results($query_str);
-									foreach ($data as $d) {
-								?>
-									<option value="<?php echo $d['id_berita'] ?>" <?php if($d['id_berita'] == $id_berita){ echo "selected"; } ?>><?php echo $d['berita_title']; ?></option>
-								<?php }	?>
-							</select>
-						</div>
-					</div>
-
-					<div id="category">
-						<div class="form-group">
-							<label for="">Pilih Kategori</label>
-							<select name="id_kategori" id="id_kategori" class="form-control">
-								<option value="">Pilih</option>
-								<option value="all">Semua Kategori</option>
-								<?php 
-									$query_str = "SELECT * FROM kategori WHERE aktif='Y' ORDER by id_kategori DESC";
-									$data = $db->get_results($query_str);
-									foreach ($data as $d) {
-								?>
-									<option value="<?php echo $d['id_kategori'] ?>" <?php if($d['id_kategori'] == $id_kategori){ echo "selected"; } ?>><?php echo $d['nama_kategori']; ?></option>
-								<?php }	?>
-							</select>
-						</div>
-					</div>
-
-					<div id="custom">
-						<div class="form-group">
-							<label for="">Masukan URL</label>
-							<input type="text" name="url" value="<?php echo $link; ?>" class="form-control" id="input-url">
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="">
-						<div class="widget">
-							<div class="widget-header">
-								<span class="widget-title">Area</span>
-							</div>
-							<div class="widget-body">
-								<div class="form-group">
-									<label for=""></label>
-									<select name="id_area" id="" class="form-control">
-										<?php 
-											$query_str = "SELECT * FROM menuarea";
-											$query = $db->query($query_str);
-											while($data = $query->fetch_array()){
-										?>
-											<option value="<?php echo $data['id_area']; ?>" <?php if($data['id_area'] == $area){ echo "selected"; } ?>><?php echo $data['nama_area']; ?></option>
-										<?php } ?>
-										
-									</select>
-								</div>
-							</div>
-							<div class="widget-footer">
-								<div class="widget-action pull-right">
-									<button type="submit" name="update" class="btn-add btn-sm">Update Data</button>
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-
-
-	<?php 
-}
-
-function get_menu(){
-	global $library, $db;
-	?>
-	<div class="module-header">
-		<div id="module-message"></div>
-		<h3 class="module-title">Data Menu</h3> 
-	</div>
-	<div class="module-body">
-		<div class="row">
-			<div class="col-md-4">
-				<ul class="menu-wrapper">
-				<?php 
-					
-					$id = isset($_GET['id']) ? abs($_GET['id']) : false;
-					
-					$select = "";
-					$query_str = "SELECT * FROM mainmenu WHERE area='{$id}' ORDER BY position ASC";
-					
-					$position = $db->query($query_str);
-					while($p = $position->fetch_array()){
-						$select .="<option value='{$p['position']}'>{$p['nama_menu']}</option>";
-					}
-
-					$query_str = "SELECT * FROM mainmenu WHERE area='{$id}' ORDER BY position ASC";
-					$query = $db->query($query_str);
-					while ($data = $query->fetch_array()) {
-				?>	
-					<li class="menu" id="<?php echo $data['position']; ?>">
-						<form action="<?php echo BASE_URL .'gz-admin/ajax/menu.ajax.php'; ?>" method="POST">
-							<div class="menu-header">
-								<span class="pull-left">
-								<a href="javascript:void(0)"><?php echo $data['nama_menu']; ?></a>
-								</span>
-								<span class="pull-right">
-									<a href="javascript:void(0)" class="menu-trigger">Edit</a>
-								</span>
-								<div class="clearfix"></div>
-							</div>
-						
-							<div class="menu-animate">
-								<div class="menu-body">
-									<div class="menu-data-<?php echo $data['id_main']; ?>">
-										<input type="hidden" name="current_position" value="<?php echo $data['position']; ?>">
-										<div class="form-group">
-											<label for="">Pindah ke:</label>
-											<select name="move" id="" class="form-control">
-												<option value="">Pilih</option>
-												<option value="up">Keatas</option>
-												<option value="down">Kebawah</option>
-											</select>
-										</div>
-									</div>
-								</div>
-								<div class="menu-footer">
-									<a href="javascript:void(0)" class="btn btn-sm btn-default pull-right save-menu">Pindah</a>
-									<div class="clearfix"></div>
-								</div>
-							</div>
-						</form>
-					</li>
-				<?php } ?>
-				</ol>		
-			</div>
-		</div>
-		
-	</div>
-<?php }  ?>

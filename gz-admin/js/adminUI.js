@@ -449,3 +449,16 @@ $('#simpan-menu').click(function(e){
 	})
 
 });
+
+deleteCurrentMenu = function( e, id, to, method ) {
+	e.preventDefault();
+	$.ajax({
+		type: method,
+		url: to,
+		data: { id_main: id, true_submit: '' },
+		success: function ( response ) {
+			console.log ( response );
+			location.reload();
+		}
+	}); 
+}
